@@ -5,10 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Button,
   Image,
-  Input,
-  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
@@ -17,20 +14,8 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 const Stack = createStackNavigator();
 
+
 export default class App extends React.Component {
-  constructor(props) {
-    // Appel du constructeur de Component
-    super(props);
-    // Initialise les propriétés du composant
-    this.state = {
-       student_card_number: "",
-    };
-  }
-
-  componentDidMount() {
-        
-  }
-
   render() {
     return (
       <NavigationContainer>
@@ -100,19 +85,33 @@ export const home = ({ navigation }) => {
 };
 
 export const mhA = ({ navigation, route }) => {
-  let [selectedImage, setSelectedImage] = React.useState(null);
   let [selectInfor, setSelectedInfor] = React.useState([]);
-  
-  let handleImageChange = (e) => {
-    setSelectedImage(e.target.files[0]);
-  }
+  let [image, setImage] = React.useState(null);
+
+
+  let pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    console.log(selectedImage);
     let form_data = new FormData();
-    form_data.append('image',selectedImage, selectedImage.name);
-    let url = "http://127.0.0.1:8000/api/id-card/";
+    form_data.append('image', {
+      uri: image,
+      name: 'test.jpg',
+      type: 'image/jpeg'
+    });
+    let url = "http://192.168.1.152:8000/api/id-card/";
+    // let url = "http://127.0.0.1:8000/api/id-card/";
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -123,15 +122,15 @@ export const mhA = ({ navigation, route }) => {
           setSelectedInfor(res.data);
         })
         .catch(err => console.log(err)) 
-  
   }
+
+
   return (
     <View style={styles.container}>
-      <form onSubmit={handleSubmit}>
       <View style={styles.containerlayout}>
-        {selectedImage !== null ? (
+        {image !== null ? (
           <Image
-            source={{ uri: selectedImage }}
+            source={{ uri: image }}
             style={styles.thumbnail}
           />
         ) : (
@@ -140,39 +139,33 @@ export const mhA = ({ navigation, route }) => {
             style={{ width: 200, height: 130 }}
           />
         )}
-        <input type="file" id="image" accept="image/png ,image/jpeg" onChange={handleImageChange} required/>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={pickImage}>
+          <LinearGradient
+            colors={['seagreen', 'darkgreen', '#192f6a']}
+            style={styles.linearGradient}>
+            <Text style={styles.text}>Upload File</Text>
+          </LinearGradient>
+        </TouchableOpacity>
         <View style={styles.form}>
           <Text style={styles.text2}>Thông tin trên căn cước công dân</Text>
           <View style={styles.row}>
             <Text style={{ marginRight: 45 }}>Số :</Text>
-            <Text style={{
+            <TextInput selectTextOnFocus={false} style={{
                 height: 20,
                 width: 150,
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
                 backgroundColor: '#D3D3D3',
-              }}>
-              {selectInfor.id_card_number}
-            </Text>
+              }}
+              value = {selectInfor.id_card_number}
+            />
           </View>
           <View style={styles.row}>
             <Text style={{ marginRight: 20 }}>Họ tên :</Text>
-            <Text
-              style={{
-                height: 20,
-                width: 150,
-                borderColor: 'gray',
-                borderWidth: 1,
-                borderRadius: 5,
-                backgroundColor: '#D3D3D3',
-              }}>
-                {selectInfor.name}
-            </Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={{ marginRight: 2 }}>Ngày sinh :</Text>
-            <TextInput
+            <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
                 width: 150,
@@ -181,11 +174,12 @@ export const mhA = ({ navigation, route }) => {
                 borderRadius: 5,
                 backgroundColor: '#D3D3D3',
               }}
+                value = {selectInfor.name}
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 5 }}>Quê quán :</Text>
-            <TextInput
+            <Text style={{ marginRight: 0 }}>Ngày sinh :</Text>
+            <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
                 width: 150,
@@ -194,11 +188,12 @@ export const mhA = ({ navigation, route }) => {
                 borderRadius: 5,
                 backgroundColor: '#D3D3D3',
               }}
+              value = {selectInfor.dob}
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 27 }}>DCTT :</Text>
-            <TextInput
+            <Text style={{ marginRight: 12 }}>Giới tính :</Text>
+            <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
                 width: 150,
@@ -207,11 +202,54 @@ export const mhA = ({ navigation, route }) => {
                 borderRadius: 5,
                 backgroundColor: '#D3D3D3',
               }}
+              value = {selectInfor.sex}
+            />
+          </View>
+          <View style={styles.row}>
+            <Text style={{ marginRight: 2 }}>Quốc tịch :</Text>
+            <TextInput selectTextOnFocus={false}
+              style={{
+                height: 20,
+                width: 150,
+                borderColor: 'gray',
+                borderWidth: 1,
+                borderRadius: 5,
+                backgroundColor: '#D3D3D3',
+              }}
+              value = {selectInfor.nationality}
+            />
+          </View>
+          <View style={styles.row}>
+            <Text style={{ marginRight: 2 }}>Quê quán :</Text>
+            <TextInput selectTextOnFocus={false}
+              style={{
+                height: 20,
+                width: 150,
+                borderColor: 'gray',
+                borderWidth: 1,
+                borderRadius: 5,
+                backgroundColor: '#D3D3D3',
+              }}
+              value = {selectInfor.hometown}
+            />
+          </View>
+          <View style={styles.row}>
+            <Text style={{ marginRight: 27 }}>ĐCTT :</Text>
+            <TextInput selectTextOnFocus={false}
+              style={{
+                height: 20,
+                width: 150,
+                borderColor: 'gray',
+                borderWidth: 1,
+                borderRadius: 5,
+                backgroundColor: '#D3D3D3',
+              }}
+              value = {selectInfor.address}
             />
           </View>
           <View style={styles.row}>
             <Text style={{ marginRight: 27 }}>Có giá trị đến :</Text>
-            <TextInput
+            <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
                 width: 100,
@@ -220,12 +258,20 @@ export const mhA = ({ navigation, route }) => {
                 borderRadius: 5,
                 backgroundColor: '#D3D3D3',
               }}
+              value = {selectInfor.expires}
             />
           </View>
-          <input type="submit"/>
+          <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}>
+          <LinearGradient
+            colors={['seagreen', 'darkgreen', '#192f6a']}
+            style={styles.linearGradient}>
+            <Text style={styles.text}>Trích xuất</Text>
+          </LinearGradient>
+        </TouchableOpacity>
         </View>
       </View>
-      </form>
     </View>
   );
 };
@@ -573,8 +619,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
     marginBottom: 10,
-    width: 250,
-    height: 350,
+    width: 400,
+    height: 400,
     backgroundColor: 'white',
     borderRadius: 10,
   },
