@@ -110,7 +110,7 @@ export const mhA = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.153:8000/api/id-card/"; // get ip address of current device
+    let url = "http://192.168.1.156:8000/api/id-card/"; // get ip address of current device
     // let url = "http://127.0.0.1:8000/api/id-card/";
     axios.post(url, form_data, {
       headers: {
@@ -151,10 +151,10 @@ export const mhA = ({ navigation, route }) => {
         <View style={styles.form}>
           <Text style={styles.text2}>Thông tin trên căn cước công dân</Text>
           <View style={styles.row}>
-            <Text style={{ marginRight: 65 }}>Số :</Text>
+            <Text style={{width:'30%'}}>Số :</Text>
             <TextInput selectTextOnFocus={false} style={{
+                width: '70%',
                 height: 20,
-                width: 200,
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -164,11 +164,11 @@ export const mhA = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 40 }}>Họ tên :</Text>
+            <Text style={{ width:'30%', }}>Họ tên :</Text>
             <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -178,11 +178,11 @@ export const mhA = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 20 }}>Ngày sinh :</Text>
+            <Text style={{  width:'30%'}}>Ngày sinh :</Text>
             <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -192,11 +192,11 @@ export const mhA = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 30 }}>Giới tính :</Text>
+            <Text style={{  width:'30%' }}>Giới tính :</Text>
             <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -206,11 +206,11 @@ export const mhA = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 22 }}>Quốc tịch :</Text>
+            <Text style={{  width:'30%'}}>Quốc tịch :</Text>
             <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -220,11 +220,11 @@ export const mhA = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 20 }}>Quê quán :</Text>
+            <Text style={{  width:'30%' }}>Quê quán :</Text>
             <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -234,11 +234,11 @@ export const mhA = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 40 }}>ĐCTT :</Text>
+            <Text style={{  width:'30%'}}>ĐCTT :</Text>
             <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -248,11 +248,11 @@ export const mhA = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 7 }}>Có giá trị đến :</Text>
+            <Text style={{  width:'35%'}}>Có giá trị đến :</Text>
             <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 180,
+                width: '64.5%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -302,7 +302,7 @@ const mhB = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.153:8000/api/driving-license/"; // get ip address of current device
+    let url = "http://192.168.1.156:8000/api/driving-license/"; // get ip address of current device
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -341,12 +341,12 @@ const mhB = ({ navigation, route }) => {
         </TouchableOpacity>
         <View style={styles.form}>
           <Text style={styles.text2}>Thông tin trên giấy phép lái xe</Text>
-          <View style={styles.row1}>
-            <Text style={{ marginRight: 55 }}>Số :</Text>
+          <View style={styles.row}>
+            <Text style={{ width:'30%', }}>Số :</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -355,12 +355,12 @@ const mhB = ({ navigation, route }) => {
               value = {selectInfor.driving_license_number}
             />
           </View>
-          <View style={styles.row1}>
-            <Text style={{ marginRight: 30 }}>Họ tên :</Text>
+          <View style={styles.row}>
+            <Text style={{ width:'30%',}}>Họ tên :</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -369,12 +369,12 @@ const mhB = ({ navigation, route }) => {
               value = {selectInfor.name}
             />
           </View>
-          <View style={styles.row1}>
-            <Text style={{ marginRight: 15 }}>Ngày sinh:</Text>
+          <View style={styles.row}>
+            <Text style={{ width:'30%', }}>Ngày sinh:</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -383,12 +383,12 @@ const mhB = ({ navigation, route }) => {
               value = {selectInfor.dob}
             />
           </View>
-          <View style={styles.row1}>
-            <Text style={{ marginRight: 15 }}>Quốc tịch:</Text>
+          <View style={styles.row}>
+            <Text style={{ width:'30%',}}>Quốc tịch:</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -397,12 +397,12 @@ const mhB = ({ navigation, route }) => {
               value = {selectInfor.nationality}
             />
           </View>
-          <View style={styles.row1}>
-            <Text style={{ marginRight: 15 }}>Nơi cư trú:</Text>
+          <View style={styles.row}>
+            <Text style={{ width:'30%', }}>Nơi cư trú:</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -411,12 +411,12 @@ const mhB = ({ navigation, route }) => {
               value = {selectInfor.address}
             />
           </View>
-          <View style={styles.row1}>
-            <Text style={{ marginRight: 35 }}>Hạng :</Text>
+          <View style={styles.row}>
+            <Text style={{ width:'30%',  }}>Hạng :</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -426,11 +426,11 @@ const mhB = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 7 }}>Có giá trị đến :</Text>
+            <Text style={{ width:'35%', }}>Có giá trị đến :</Text>
             <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 180,
+                width: '64.5%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -480,7 +480,7 @@ const mhC = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.153:8000/api/student-card/"; // get ip address of current device
+    let url = "http://192.168.1.156:8000/api/student-card/"; // get ip address of current device
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -519,11 +519,11 @@ const mhC = ({ navigation, route }) => {
         <View style={styles.form}>
           <Text style={styles.text2}>Thông tin trên thẻ sinh viên</Text>
           <View style={styles.row}>
-            <Text style={{ marginRight: 25 }}>Trường :</Text>
+            <Text style={{ width:'30%', }}>MSSV :</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -533,11 +533,11 @@ const mhC = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 17 }}>Mã số sv :</Text>
+            <Text style={{ width:'30%', }}>Họ tên :</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -547,11 +547,11 @@ const mhC = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 32 }}>Họ tên :</Text>
+            <Text style={{ width:'30%', }}>Ngành :</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -561,11 +561,11 @@ const mhC = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 29 }}>Ngành :</Text>
+            <Text style={{ width:'30%', }}>Khoa :</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -575,11 +575,11 @@ const mhC = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{ marginRight: 14 }}>Khóa học :</Text>
+            <Text style={{ width:'30%', }}>Khóa học :</Text>
             <TextInput  selectTextOnFocus={false}
               style={{
                 height: 20,
-                width: 200,
+                width: '70%',
                 borderColor: 'gray',
                 borderWidth: 1,
                 borderRadius: 5,
@@ -646,15 +646,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     color: 'white',
   },
-  button1: {
-    color: 'black',
-    backgroundColor: 'white',
-    fontWeight: 'bold',
-    padding: 8,
-    borderRadius: 5,
-    margin: 10,
-    marginTop: 20,
-  },
+
   linearGradient: {
     width: 200,
     height: 50,
@@ -669,11 +661,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 12,
   },
-  text1: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 12,
-  },
+
   text2: {
     color: 'black',
     fontWeight: 'bold',
@@ -691,38 +679,18 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     paddingTop: 20,
   },
-  form: {
-    flex: 1,
+  form: { 
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 10,
-    width: 600,
-    height: 400,
+    margin:10,
+    width: '100%',
     backgroundColor: 'white',
-    borderRadius: 10,
   },
   row: {
+    width: 300,
     paddingTop: 7,
     flexDirection: 'row',
     flexWrap: 'wrap',
     padding: 5,
-  },
-  row1: {
-    paddingTop: 7,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    padding: 2,
-  },
-  linearGradient1: {
-    width: 120,
-    marginTop: 10,
-    height: 30,
-    backgroundColor: 'green',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 8,
   },
   thumbnail: {
     width: 200,
