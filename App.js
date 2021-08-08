@@ -10,6 +10,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Spinner from 'react-native-loading-spinner-overlay';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 const Stack = createStackNavigator();
@@ -87,6 +88,7 @@ export const home = ({ navigation }) => {
 export const mhA = ({ navigation, route }) => {
   let [selectInfor, setSelectedInfor] = React.useState([]);
   let [image, setImage] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
 
 
   let pickImage = async () => {
@@ -103,6 +105,7 @@ export const mhA = ({ navigation, route }) => {
   };
 
   let handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     let form_data = new FormData();
     form_data.append('image', {
@@ -110,7 +113,7 @@ export const mhA = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.156:8000/api/id-card/"; // get ip address of current device
+    let url = "http://192.168.1.176:8000/api/id-card/"; // get ip address of current device
     // let url = "http://127.0.0.1:8000/api/id-card/";
     axios.post(url, form_data, {
       headers: {
@@ -119,6 +122,7 @@ export const mhA = ({ navigation, route }) => {
     })
         .then(res => {
           console.log(res.data);
+          setLoading(false);
           setSelectedInfor(res.data);
         })
         .catch(err => console.log(err)) 
@@ -127,6 +131,14 @@ export const mhA = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <Spinner
+          //visibility of Overlay Loading Spinner
+          visible={loading}
+          //Text with the Spinner
+          textContent={'Loading...'}
+          //Text style of the Spinner Text
+          textStyle={styles.spinnerTextStyle}
+      />
       <View style={styles.containerlayout}>
         {image !== null ? (
           <Image
@@ -279,7 +291,7 @@ export const mhA = ({ navigation, route }) => {
 const mhB = ({ navigation, route }) => {
   let [selectInfor, setSelectedInfor] = React.useState([]);
   let [image, setImage] = React.useState(null);
-
+  const [loading, setLoading] = React.useState(false);
 
   let pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -295,6 +307,7 @@ const mhB = ({ navigation, route }) => {
   };
 
   let handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     let form_data = new FormData();
     form_data.append('image', {
@@ -302,7 +315,7 @@ const mhB = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.156:8000/api/driving-license/"; // get ip address of current device
+    let url = "http://192.168.1.176:8000/api/driving-license/"; // get ip address of current device
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -310,6 +323,7 @@ const mhB = ({ navigation, route }) => {
     })
         .then(res => {
           console.log(res.data);
+          setLoading(false);
           setSelectedInfor(res.data);
         })
         .catch(err => console.log(err)) 
@@ -318,6 +332,14 @@ const mhB = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <Spinner
+          //visibility of Overlay Loading Spinner
+          visible={loading}
+          //Text with the Spinner
+          textContent={'Loading...'}
+          //Text style of the Spinner Text
+          textStyle={styles.spinnerTextStyle}
+      />
       <View style={styles.containerlayout}>
         {image !== null ? (
           <Image
@@ -457,6 +479,7 @@ const mhB = ({ navigation, route }) => {
 const mhC = ({ navigation, route }) => {
   let [selectInfor, setSelectedInfor] = React.useState([]);
   let [image, setImage] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
 
 
   let pickImage = async () => {
@@ -473,6 +496,7 @@ const mhC = ({ navigation, route }) => {
   };
 
   let handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     let form_data = new FormData();
     form_data.append('image', {
@@ -480,7 +504,7 @@ const mhC = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.156:8000/api/student-card/"; // get ip address of current device
+    let url = "http://192.168.1.176:8000/api/student-card/"; // get ip address of current device
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -488,6 +512,7 @@ const mhC = ({ navigation, route }) => {
     })
         .then(res => {
           console.log(res.data);
+          setLoading(false);
           setSelectedInfor(res.data);
         })
         .catch(err => console.log(err)) 
@@ -495,6 +520,14 @@ const mhC = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <Spinner
+          //visibility of Overlay Loading Spinner
+          visible={loading}
+          //Text with the Spinner
+          textContent={'Loading...'}
+          //Text style of the Spinner Text
+          textStyle={styles.spinnerTextStyle}
+      />
       <View style={styles.containerlayout}>
         {image != null ? (
           <Image
@@ -604,6 +637,9 @@ const mhC = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: '#FFF',
+  },
   container: {
     flex: 1,
     padding: 0,
