@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as ImagePicker from 'expo-image-picker';
+import ActionSheet from 'react-native-actionsheet';
 import axios from 'axios';
 const Stack = createStackNavigator();
 
@@ -91,7 +92,7 @@ export const mhA = ({ navigation, route }) => {
   const [loading, setLoading] = React.useState(false);
 
 
-  let pickImage = async () => {
+  pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -104,6 +105,27 @@ export const mhA = ({ navigation, route }) => {
     }
   };
 
+  openCamera = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this app to access your camera!");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync();
+
+    //Explore the result
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  }
+
+  showActionSheet = () => {
+    this.ActionSheet.show()
+  }
+
   let handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
@@ -113,7 +135,7 @@ export const mhA = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.176:8000/api/id-card/"; // get ip address of current device
+    let url = "http://192.168.1.127:8000/api/id-card/"; // get ip address of current device
     // let url = "http://127.0.0.1:8000/api/id-card/";
     axios.post(url, form_data, {
       headers: {
@@ -153,13 +175,28 @@ export const mhA = ({ navigation, route }) => {
         )}
         <TouchableOpacity
           style={styles.button}
-          onPress={pickImage}>
+          onPress={this.showActionSheet}>
           <LinearGradient
             colors={['seagreen', 'darkgreen', '#192f6a']}
             style={styles.linearGradient}>
-            <Text style={styles.text}>Upload File</Text>
+            <Text style={styles.text}>Tải Ảnh Lên</Text>
           </LinearGradient>
         </TouchableOpacity>
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          title={'Tải Ảnh Lên'}
+          options={['Mở Camera', 'Chọn ảnh từ thư viện', 'Hủy']}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={index => {
+            if (index == 0) {
+              this.openCamera();
+            }
+            if (index == 1) {
+              this.pickImage();
+            }
+          }}
+        />
         <View style={styles.form}>
           <Text style={styles.text2}>Thông tin trên căn cước công dân</Text>
           <View style={styles.row}>
@@ -190,7 +227,7 @@ export const mhA = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.row}>
-            <Text style={{  width:'30%'}}>Ngày sinh :</Text>
+            <Text style={{width:'30%'}}>Ngày sinh :</Text>
             <TextInput selectTextOnFocus={false}
               style={{
                 height: 20,
@@ -293,7 +330,7 @@ const mhB = ({ navigation, route }) => {
   let [image, setImage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
 
-  let pickImage = async () => {
+  pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -306,6 +343,27 @@ const mhB = ({ navigation, route }) => {
     }
   };
 
+  openCamera = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this app to access your camera!");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync();
+
+    //Explore the result
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  }
+
+  showActionSheet = () => {
+    this.ActionSheet.show()
+  }
+
   let handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
@@ -315,7 +373,7 @@ const mhB = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.176:8000/api/driving-license/"; // get ip address of current device
+    let url = "http://192.168.1.127:8000/api/driving-license/"; // get ip address of current device
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -354,13 +412,28 @@ const mhB = ({ navigation, route }) => {
         )}
         <TouchableOpacity
           style={styles.button}
-          onPress={pickImage}>
+          onPress={this.showActionSheet}>
           <LinearGradient
             colors={['seagreen', 'darkgreen', '#192f6a']}
             style={styles.linearGradient}>
-            <Text style={styles.text}>Upload File</Text>
+            <Text style={styles.text}>Tải Ảnh Lên</Text>
           </LinearGradient>
         </TouchableOpacity>
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          title={'Tải Ảnh Lên'}
+          options={['Mở Camera', 'Chọn ảnh từ thư viện', 'Hủy']}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={index => {
+            if (index == 0) {
+              this.openCamera();
+            }
+            if (index == 1) {
+              this.pickImage();
+            }
+          }}
+        />
         <View style={styles.form}>
           <Text style={styles.text2}>Thông tin trên giấy phép lái xe</Text>
           <View style={styles.row}>
@@ -481,8 +554,7 @@ const mhC = ({ navigation, route }) => {
   let [image, setImage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
 
-
-  let pickImage = async () => {
+  pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -495,6 +567,28 @@ const mhC = ({ navigation, route }) => {
     }
   };
 
+  openCamera = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this app to access your camera!");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync();
+
+    //Explore the result
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  }
+
+  showActionSheet = () => {
+    this.ActionSheet.show()
+  }
+
+
   let handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
@@ -504,7 +598,7 @@ const mhC = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.176:8000/api/student-card/"; // get ip address of current device
+    let url = "http://192.168.1.127:8000/api/student-card/"; // get ip address of current device
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -542,13 +636,28 @@ const mhC = ({ navigation, route }) => {
         )}
         <TouchableOpacity
           style={styles.button}
-          onPress={pickImage}>
+          onPress={this.showActionSheet}>
           <LinearGradient
             colors={['seagreen', 'darkgreen', '#192f6a']}
             style={styles.linearGradient}>
-            <Text style={styles.text}>Upload File</Text>
+            <Text style={styles.text}>Tải Ảnh Lên</Text>
           </LinearGradient>
         </TouchableOpacity>
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          title={'Tải Ảnh Lên'}
+          options={['Mở Camera', 'Chọn ảnh từ thư viện', 'Hủy']}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={2}
+          onPress={index => {
+            if (index == 0) {
+              this.openCamera();
+            }
+            if (index == 1) {
+              this.pickImage();
+            }
+          }}
+        />
         <View style={styles.form}>
           <Text style={styles.text2}>Thông tin trên thẻ sinh viên</Text>
           <View style={styles.row}>
