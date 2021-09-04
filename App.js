@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,6 +14,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as ImagePicker from 'expo-image-picker';
 import ActionSheet from 'react-native-actionsheet';
+import AwesomeAlert from 'react-native-awesome-alerts';
 import axios from 'axios';
 const Stack = createStackNavigator();
 
@@ -90,6 +92,12 @@ export const mhA = ({ navigation, route }) => {
   let [selectInfor, setSelectedInfor] = React.useState([]);
   let [image, setImage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+  let [alert, setAlert] = React.useState(false);
+
+
+  hideAlert = () => {
+    setAlert(false);
+  };
 
 
   pickImage = async () => {
@@ -121,12 +129,16 @@ export const mhA = ({ navigation, route }) => {
       setImage(result.uri);
     }
   }
+  
 
   showActionSheet = () => {
     this.ActionSheet.show()
   }
 
+
   let handleSubmit = (e) => {
+    setSelectedInfor([]);
+    let checkNone = false;
     setLoading(true);
     e.preventDefault();
     let form_data = new FormData();
@@ -135,8 +147,7 @@ export const mhA = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.127:8000/api/id-card/"; // get ip address of current device
-    // let url = "http://127.0.0.1:8000/api/id-card/";
+    let url = "http://192.168.1.132:8000/api/id-card/"; // get ip address of current device
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -145,14 +156,40 @@ export const mhA = ({ navigation, route }) => {
         .then(res => {
           console.log(res.data);
           setLoading(false);
-          setSelectedInfor(res.data);
+          for (const [key, value] of Object.entries(res.data)) {
+            if (`${value}` === "None") {
+              setAlert(true);
+              checkNone = true;
+              break;
+            } 
+          }
+          if (!checkNone) {
+            setSelectedInfor(res.data);
+          }
         })
-        .catch(err => console.log(err)) 
+        .catch(err => {
+          console.log(err);
+          setLoading(false);
+          setAlert(true);
+        }) 
   }
-
 
   return (
     <View style={styles.container}>
+      <AwesomeAlert
+          show={alert}
+          showProgress={false}
+          title="Lỗi"
+          message="Ảnh chất lượng thấp hoặc sai định dạng"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="OK"
+          confirmButtonColor="#DD6B55"
+          onConfirmPressed={() => {
+            this.hideAlert();
+          }}
+      />
       <Spinner
           //visibility of Overlay Loading Spinner
           visible={loading}
@@ -329,6 +366,13 @@ const mhB = ({ navigation, route }) => {
   let [selectInfor, setSelectedInfor] = React.useState([]);
   let [image, setImage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+  let [alert, setAlert] = React.useState(false);
+
+
+  hideAlert = () => {
+    setAlert(false);
+  };
+
 
   pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -359,12 +403,16 @@ const mhB = ({ navigation, route }) => {
       setImage(result.uri);
     }
   }
+  
 
   showActionSheet = () => {
     this.ActionSheet.show()
   }
 
+
   let handleSubmit = (e) => {
+    setSelectedInfor([]);
+    let checkNone = false;
     setLoading(true);
     e.preventDefault();
     let form_data = new FormData();
@@ -373,7 +421,7 @@ const mhB = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.127:8000/api/driving-license/"; // get ip address of current device
+    let url = "http://192.168.1.132:8000/api/driving-license/"; // get ip address of current device
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -382,14 +430,40 @@ const mhB = ({ navigation, route }) => {
         .then(res => {
           console.log(res.data);
           setLoading(false);
-          setSelectedInfor(res.data);
+          for (const [key, value] of Object.entries(res.data)) {
+            if (`${value}` === "None") {
+              setAlert(true);
+              checkNone = true;
+              break;
+            } 
+          }
+          if (!checkNone) {
+            setSelectedInfor(res.data);
+          }
         })
-        .catch(err => console.log(err)) 
+        .catch(err => {
+          console.log(err);
+          setLoading(false);
+          setAlert(true);
+        }) 
   }
-
 
   return (
     <View style={styles.container}>
+      <AwesomeAlert
+          show={alert}
+          showProgress={false}
+          title="Lỗi"
+          message="Ảnh chất lượng thấp hoặc sai định dạng"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="OK"
+          confirmButtonColor="#DD6B55"
+          onConfirmPressed={() => {
+            this.hideAlert();
+          }}
+      />
       <Spinner
           //visibility of Overlay Loading Spinner
           visible={loading}
@@ -553,6 +627,13 @@ const mhC = ({ navigation, route }) => {
   let [selectInfor, setSelectedInfor] = React.useState([]);
   let [image, setImage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+  let [alert, setAlert] = React.useState(false);
+
+
+  hideAlert = () => {
+    setAlert(false);
+  };
+
 
   pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -583,6 +664,7 @@ const mhC = ({ navigation, route }) => {
       setImage(result.uri);
     }
   }
+  
 
   showActionSheet = () => {
     this.ActionSheet.show()
@@ -590,6 +672,8 @@ const mhC = ({ navigation, route }) => {
 
 
   let handleSubmit = (e) => {
+    setSelectedInfor([]);
+    let checkNone = false;
     setLoading(true);
     e.preventDefault();
     let form_data = new FormData();
@@ -598,7 +682,7 @@ const mhC = ({ navigation, route }) => {
       name: 'test.jpg',
       type: 'image/jpeg'
     });
-    let url = "http://192.168.1.127:8000/api/student-card/"; // get ip address of current device
+    let url = "http://192.168.1.132:8000/api/student-card/"; // get ip address of current device
     axios.post(url, form_data, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -607,13 +691,41 @@ const mhC = ({ navigation, route }) => {
         .then(res => {
           console.log(res.data);
           setLoading(false);
-          setSelectedInfor(res.data);
+          for (const [key, value] of Object.entries(res.data)) {
+            if (`${value}` === "None") {
+              setAlert(true);
+              checkNone = true;
+              break;
+            } 
+          }
+          if (!checkNone) {
+            setSelectedInfor(res.data);
+          }
         })
-        .catch(err => console.log(err)) 
+        .catch(err => {
+          console.log(err);
+          setLoading(false);
+          setAlert(true);
+        }) 
   }
 
   return (
     <View style={styles.container}>
+      <AwesomeAlert
+          show={alert}
+          showProgress={false}
+          title="Lỗi"
+          message="Ảnh chất lượng thấp hoặc sai định dạng"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="OK"
+          confirmButtonColor="#DD6B55"
+          onConfirmPressed={() => {
+            this.hideAlert();
+          }}
+      />
+      
       <Spinner
           //visibility of Overlay Loading Spinner
           visible={loading}
@@ -623,7 +735,7 @@ const mhC = ({ navigation, route }) => {
           textStyle={styles.spinnerTextStyle}
       />
       <View style={styles.containerlayout}>
-        {image != null ? (
+        {image !== null ? (
           <Image
             source={{ uri: image }}
             style={styles.thumbnail}
@@ -844,5 +956,3 @@ const styles = StyleSheet.create({
   },
  
 });
-
-
